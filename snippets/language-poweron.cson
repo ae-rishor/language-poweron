@@ -1,0 +1,683 @@
+# If you want some example snippets, check out:
+# https://github.com/atom/language-javascript/blob/master/snippets/javascript.cson
+
+#'.source.poweron':
+#    'body': '@@ ${1:method} - ${2:description}'
+
+'.source.poweron':
+  'DEFINE':
+    'prefix': 'DEFINE'
+    'body': 'DEFINE\n\s$1\nEND [DEFINE]'
+
+
+  'SETUP':
+    'prefix': 'SETUP'
+    'body': 'SETUP\n\s$1\nEND [SETUP]'
+
+
+  'SELECT':
+    'prefix': 'SELECT'
+    'body': 'SELECT\n\s$1\nEND [SELECT]'
+
+
+  'PRINT':
+    'prefix': 'PRINT'
+    'body': 'PRINT TITLE = ""\n\s$1\nEND [PRINT]'
+
+
+  'SORT':
+    'prefix': 'SORT'
+    'body': 'SORT\n\s$1\nEND [SORT]'
+
+
+  'TOTAL':
+    'prefix': 'TOTAL'
+    'body': 'TOTAL \n\s$1\nEND [TOTAL]'
+
+  'DO...END':
+    'prefix': 'DO'
+    'body': 'DO\n\t$1\nEND'
+
+  '\'--/--/----\'':
+    'prefix': 'BD'
+    'body': '\'--/--/----\''
+
+  'FORMAT Date':
+    'prefix': 'FMTD'
+    'body': 'FORMAT("99/99/9999",${1:FIELD})$2'
+
+  'FORMAT Rate':
+    'prefix': 'FMTR'
+    'body': 'FORMAT("##9.999%",${1:FIELD})$2'
+
+  'FORMAT Money':
+    'prefix': 'FMTM'
+    'body': 'FORMAT("###,##9.99+",${1:FIELD})$2'
+
+  'FORMAT Number':
+    'prefix': 'FMTN'
+    'body': 'FORMAT("999",${1:FIELD})$2'
+
+  'MMDDYYYY Date Pattern':
+    'prefix': 'MMDDYYYY'
+    'body': 'FORMAT("99",MONTH(SYSTEMDATE))+FORMAT("99",DAY(SYSTEMDATE))+FORMAT("9999",FULLYEAR(SYSTEMDATE))$1'
+
+  'MMYYYY Date Pattern':
+    'prefix': 'MMYYYY'
+    'body': 'FORMAT("99",MONTH(SYSTEMDATE))+FORMAT("9999",FULLYEAR(SYSTEMDATE))$1'
+
+  'YYYY Date Pattern':
+    'prefix': 'YYYY'
+    'body': 'FORMAT("9999",FULLYEAR(SYSTEMDATE))$1'
+
+  'POPUPMESSAGE':
+    'prefix': 'PM'
+    'body': 'POPUPMESSAGE(0,${1:MESSAGE})$2'
+
+  'FILEOPEN':
+    'prefix': 'FO'
+    'body': 'FILEOPEN("${1:FILETYPE}",${2:FILENAME},"${3:MODE}",${4:FILENUMBER},${5:FERROR})$6'
+
+  'Comment - Standard':
+    'prefix': 'COM'
+    'body': '[$1]$2'
+
+  'TRACKING:USERAMOUNT':
+    'prefix': 'TRA'
+    'body': 'TRACKING:USERAMOUNT$1'
+
+  'TRACKING:USERDATE':
+    'prefix': 'TRD'
+    'body': 'TRACKING:USERDATE$1'
+
+  'TRACKING:USERRATE':
+    'prefix': 'TRR'
+    'body': 'TRACKING:USERRATE$1'
+
+  'TRACKING:USERNUMBER':
+    'prefix': 'TRN'
+    'body': 'TRACKING:USERNUMBER$1'
+
+  'TRACKING:USERCHAR':
+    'prefix': 'TRCH'
+    'body': 'TRACKING:USERCHAR$1'
+
+  'TRACKING:USERCODE':
+    'prefix': 'TRCO'
+    'body': 'TRACKING:USERCODE$1'
+
+  'Region Open':
+    'prefix': 'REGO'
+    'body': '[#REGION]$1'
+
+  'Region Closed':
+    'prefix': 'REGC'
+    'body': '[#ENDREGION]$1'
+
+  'TRANPERFORM':
+    'prefix': 'TP'
+    'body': """
+TRANPERFORM ${1:TRANCODE} (0,SEQ1,SEQ2,CHKCODE,CHKNBR,TRANERROR)
+ DO
+  SET TOACCT        TO $2
+  SET TOTYPE        TO $3
+  SET TOID          TO $4
+  SET AMOUNT        TO $5
+  SET GLCODE        TO $6
+  SET EFFECTIVEDATE TO $7
+  SET COMMENT:1     TO $8
+ END
+IF TRANERROR <> "" THEN
+ DO
+  POPUPMESSAGE(1,TRANERROR)
+ END
+$9
+       """
+
+  'FMPERFORM':
+    'prefix': 'FM'
+    'body': """
+FMPERFORM ${1:FMTYPE} ${2:RECORDPATH} (${3:CHECKPRIVILEGES},0,ERRORTEXT)
+ DO
+  $4
+ END
+IF ERRORTEXT <> "" THEN
+ DO
+  POPUPMESSAGE(1,ERRORTEXT)
+ END
+$5
+       """
+
+  'Subroutine Init/Execute':
+    'prefix': 'SUB'
+    'body': """
+INITSUBROUTINE (${1:ERRORTEXT})
+EXECUTE("${2:REPGEN_NAME}",${1:ERRORTEXT})$3
+       """
+
+  'Repgen Header':
+    'prefix': 'HEAD'
+    'body': """
+   [*********************************************************************
+    Type:              $1
+    Program Name:      $2
+    Written By:        $3
+    Date:              $4
+    Requested By:      $5
+    Department:        $6
+    Frequency:         $7
+    Run Requirements:  ${8:Optional}
+    Input:             ${9:Optional}
+    Output:            ${10:Optional}
+    **********************************************************************
+    Description : ${11:Overview of Repgen}
+    **********************************************************************
+    Modification History:
+
+    Date        Programmer        Description
+    ----------  ---------------   ----------------------------------------
+    **********************************************************************]
+
+    TARGET = $12
+
+
+    DEFINE
+     TRUE                          = 1
+     FALSE                         = 0
+
+    END [DEFINE]
+
+
+    SETUP
+
+    END [SETUP]
+
+
+    SELECT
+
+    END [SELECT]
+
+
+    SORT
+
+    END [SORT]
+
+
+    PRINT TITLE = ""
+              [         1         2         3         4         5         6         7         8         9        10        11        12        13  ]
+              [123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012]
+     HEADER = ""
+     HEADER = "------------------------------------------------------------------------------------------------------------------------------------"
+    END [PRINT]
+
+
+    TOTAL
+
+    END [TOTAL]
+
+       """
+
+
+  'Report Ruler Header':
+    'prefix': 'RULER'
+    'body': """
+         [         1         2         3         4         5         6         7         8         9        10        11        12        13  ]
+         [123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012]
+HEADER = ""
+HEADER = "------------------------------------------------------------------------------------------------------------------------------------"
+$1
+       """
+
+  'Code block to check SYM Directory':
+    'prefix': 'CHECKSYM'
+    'body': """
+IF SYSSYMDIRECTORY <> 0 THEN      [NOT PRODUCTION]
+ DO
+  $1
+ END
+ELSE                             [PRODUCTION]
+ DO
+  $2
+ END
+       """
+
+
+  'If Then Do':
+    'prefix': 'IF'
+    'body': """
+IF $1 THEN
+ DO
+  $2
+ END
+       """
+
+  'If Then Do Else Do':
+    'prefix': 'IFELSE'
+    'body': """
+IF $1 THEN
+ DO
+  $2
+ END
+ELSE
+ DO
+  $3
+ END
+       """
+
+  'Else If Then Do':
+    'prefix': 'ELSEIF'
+    'body': """
+IF $1 THEN
+ DO
+  $2
+ END
+ELSE IF $3 THEN
+ DO
+  $4
+ END
+       """
+
+  'Dialog Start/Display/Close Block':
+    'prefix': 'DS'
+    'body': """
+DIALOGSTART("${1:Title}",${2:500%},${3:0})$4
+
+DIALOGDISPLAY
+
+
+
+DIALOGCLOSE
+       """
+
+  'Dialog Combobox Start/Option Loop/End Block':
+    'prefix': 'DCS'
+    'body': """
+DIALOGPROMPTCOMBOSTART("${1:Label}",0)
+ FOR ${2:X} = ${3:0} TO ${4:Y}
+  DO
+   DIALOGPROMPTCOMBOOPTION(${2:X},"$5")
+  END
+DIALOGPROMPTCOMBOEND
+       """
+
+  'For Each Name...':
+    'prefix': 'FEN'
+    'body': """
+FOR EACH NAME WITH NAME:EXPIRATIONDATE = '--/--/--' AND
+                   NAME:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Note...':
+    'prefix': 'FENO'
+    'body': """
+FOR EACH NOTE WITH NOTE:EXPIRATIONDATE = '--/--/--' AND
+                   NOTE:CODE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Tracking...':
+    'prefix': 'FET'
+    'body': """
+FOR EACH TRACKING WITH (TRACKING:EXPIREDATE = '--/--/--' OR
+                        TRACKING:EXPIREDATE > SYSTEMDATE) AND
+                        TRACKING:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Share...':
+    'prefix': 'FES'
+    'body': """
+FOR EACH SHARE WITH SHARE:CLOSEDATE = '--/--/--' AND
+                    SHARE:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Share Name...':
+    'prefix': 'FESN'
+    'body': """
+FOR EACH SHARE NAME WITH SHARE NAME:EXPIRATIONDATE = '--/--/--' AND
+                         SHARE NAME:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Share Tracking...':
+    'prefix': 'FEST'
+    'body': """
+FOR EACH SHARE TRACKING WITH (SHARE TRACKING:EXPIREDATE = '--/--/--' OR
+                              SHARE TRACKING:EXPIREDATE > SYSTEMDATE) AND
+                              SHARE TRACKING:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Share Transaction...':
+    'prefix': 'FESTRN'
+    'body': """
+FOR EACH SHARE TRANSACTION WITH SHARE TRANSACTION:VOIDCODE = 0 AND
+                                SHARE TRANSACTION:COMMENTCODE = 0 AND
+                               (SHARE TRANSACTION:POSTDATE >= ${1:STARTDATE} AND
+                                SHARE TRANSACTION:POSTDATE <= ${2:STOPDATE})
+ DO
+  $3
+ END
+ UNTIL SHARE TRANSACTION:POSTDATE < ${2:STOPDATE}
+       """
+
+  'For Each Loan...':
+    'prefix': 'FEL'
+    'body': """
+FOR EACH LOAN WITH LOAN:CLOSEDATE = '--/--/--' AND
+                   LOAN:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Loan Name...':
+    'prefix': 'FELN'
+    'body': """
+FOR EACH LOAN NAME WITH LOAN NAME:EXPIRATIONDATE = '--/--/--' AND
+                        LOAN NAME:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Loan Tracking...':
+    'prefix': 'FELT'
+    'body': """
+FOR EACH LOAN TRACKING WITH (LOAN TRACKING:EXPIREDATE = '--/--/--' OR
+                             LOAN TRACKING:EXPIREDATE > SYSTEMDATE) AND
+                             LOAN TRACKING:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Loan Transaction...':
+    'prefix': 'FELTRN'
+    'body': """
+FOR EACH LOAN TRANSACTION WITH LOAN TRANSACTION:VOIDCODE = 0 AND
+                               LOAN TRANSACTION:COMMENTCODE = 0 AND
+                              (LOAN TRANSACTION:POSTDATE >= ${1:STARTDATE} AND
+                               LOAN TRANSACTION:POSTDATE <= ${2:STOPDATE})
+ DO
+  $3
+ END
+ UNTIL LOAN TRANSACTION:POSTDATE < ${2:STOPDATE}
+       """
+
+  'For Each Card...':
+    'prefix': 'FEC'
+    'body': """
+FOR EACH CARD WITH CARD:STATUS = 1 AND [ISSUED]
+                  (CARD:EXPIRATIONDATE = '--/--/--' OR
+                   CARD:EXPIRATIONDATE > SYSTEMDATE) AND
+                   CARD:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Card Name...':
+    'prefix': 'FECN'
+    'body': """
+FOR EACH CARD NAME WITH CARD NAME:EXPIRATIONDATE = '--/--/--' AND
+                        CARD NAME:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Card Access...':
+    'prefix': 'FECA'
+    'body': """
+FOR EACH CARD ACCESS WITH CARD ACCESS:IDTYPE = 0 AND [SHARE]
+                          CARD ACCESS:ID = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Loanapp...':
+    'prefix': 'FELA'
+    'body': """
+FOR EACH LOANAPP WITH (LOANAPP:EXPIRATIONDATE = '--/--/--' OR
+                       LOANAPP:EXPIRATIONDATE > SYSTEMDATE) AND
+                      (LOANAPP:EFFECTIVEDATE = '--/--/--' OR
+                       LOANAPP:EFFECTIVEDATE > SYSTEMDATE) AND
+                       LOANAPP:ID = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Loanapp Person...':
+    'prefix': 'FELAP'
+    'body': """
+FOR EACH LOANAPP PERSON WITH LOANAPP PERSON:PERSONCODE = $1
+ DO
+  $2
+ END
+       """
+
+  'For Each Loanapp Tracking...':
+    'prefix': 'FELAT'
+    'body': """
+FOR EACH LOANAPP TRACKING WITH (LOANAPP TRACKING:EXPIREDATE = '--/--/--' OR
+                                LOANAPP TRACKING:EXPIREDATE > SYSTEMDATE) AND
+                                LOANAPP TRACKING:TYPE = $1
+ DO
+  $2
+ END
+       """
+
+  'COL#1':
+    'prefix': 'COL1'
+    'body': """
+COL = 001 $1
+       """
+
+  'COL#2':
+    'prefix': 'COL2'
+    'body': """
+COL = 001
+COL = $1
+       """
+
+  'COL#3':
+    'prefix': 'COL3'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+       """
+
+  'COL#4':
+    'prefix': 'COL4'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+       """
+
+  'COL#5':
+    'prefix': 'COL5'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+       """
+
+  'COL#6':
+    'prefix': 'COL6'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+       """
+
+  'COL#7':
+    'prefix': 'COL7'
+    'body': """
+COL = 001
+COL = $1
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+       """
+
+  'COL#8':
+    'prefix': 'COL8'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+COL = $7
+       """
+
+  'COL#9':
+    'prefix': 'COL9'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+COL = $7
+COL = $8
+       """
+
+  'COL#10':
+    'prefix': 'COL10'
+    'body': """
+COL = 001
+COL = $1
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+COL = $7
+COL = $8
+COL = $9
+       """
+
+  'COL#11':
+    'prefix': 'COL11'
+    'body': """
+COL = 001
+COL = $1
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+COL = $7
+COL = $8
+COL = $9
+COL = $10
+       """
+
+  'COL#12':
+    'prefix': 'COL12'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+COL = $7
+COL = $8
+COL = $9
+COL = $10
+COL = $11
+       """
+
+  'COL#13':
+    'prefix': 'COL13'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+COL = $7
+COL = $8
+COL = $9
+COL = $10
+COL = $11
+COL = $12
+       """
+
+  'COL#14':
+    'prefix': 'COL14'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+COL = $7
+COL = $8
+COL = $9
+COL = $10
+COL = $11
+COL = $12
+COL = $13
+       """
+
+  'COL#15':
+    'prefix': 'COL15'
+    'body': """
+COL = 001
+COL = $1
+COL = $2
+COL = $3
+COL = $4
+COL = $5
+COL = $6
+COL = $7
+COL = $8
+COL = $9
+COL = $10
+COL = $11
+COL = $12
+COL = $13
+COL = $14
+       """
