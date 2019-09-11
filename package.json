@@ -1,0 +1,15 @@
+{
+  "name": "language-poweron",
+  "version": "0.1.5",
+  "description": "This language package is designed to enable the use of the PowerOn language in Atom for repgen writing. ",
+  "keywords": [
+    "language",
+    "grammar",
+    "poweron"
+  ],
+  "repository": "https://github.com/ae-rishor/language-poweron",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  }
+}
